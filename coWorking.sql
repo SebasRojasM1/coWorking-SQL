@@ -1,22 +1,28 @@
+-- Active: 1718815659607@@bgnwijf7xgjtl39fgrro-postgresql.services.clever-cloud.com@50013
 /*TABLES - Entities*/
+
+SELECT * FROM workspaces
+
 
 /*ROOM*/
 CREATE TABLE rooms (
-    room_id SERIAL PRIMARY KEY,
+    rooms_id SERIAL PRIMARY KEY,
     name_room VARCHAR(100) NOT NULL,
     num_rows INTEGER NOT NULL,
     num_columns INTEGER NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+DROP TABLE rooms
+
 
 /*WORKSPACES*/
 CREATE TABLE workspaces (
     workspace_id SERIAL PRIMARY KEY,
     room_id INTEGER NOT NULL,
-    row INTEGER NOT NULL,
-    column INTEGER NOT NULL,
+    n_row INTEGER NOT NULL,
+    n_column INTEGER NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (room_id) REFERENCES rooms(room_id)
+    FOREIGN KEY (room_id) REFERENCES rooms(rooms_id)
 );
 
 
@@ -33,6 +39,7 @@ CREATE TABLE sessions (
 CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
+    lastname VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(100) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -46,7 +53,20 @@ CREATE TABLE reservations (
     user_id INTEGER NOT NULL,
     status VARCHAR(50) NOT NULL,
     reservation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (workspace_id) REFERENCES workspaces(id),
-    FOREIGN KEY (session_id) REFERENCES sessions(id)
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (workspace_id) REFERENCES workspaces(workspace_id),
+    FOREIGN KEY (session_id) REFERENCES sessions(session_id)
 );
+
+
+SELECT * FROM sessions
+
+DROP TABLE rooms
+
+DROP TABLE workspaces
+
+DROP TABLE sessions
+
+DROP TABLE USERS
+
+DROP TABLE reservations
