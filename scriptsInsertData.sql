@@ -7,9 +7,9 @@ DECLARE
     num_columns INTEGER;
 BEGIN
     WHILE i < 100 LOOP
-        name_room := 'Room ' || (i + 1);  -- Genera nombre de sala
-        num_rows := floor(random() * (25 - 5 + 1) + 5);  -- Genera número aleatorio entre 5 y 25
-        num_columns := floor(random() * (25 - 5 + 1) + 5);  -- Genera número aleatorio entre 5 y 25
+        name_room := 'Room ' || (i + 1);  
+        num_rows := floor(random() * (25 - 5 + 1) + 5); 
+        num_columns := floor(random() * (25 - 5 + 1) + 5);
 
         INSERT INTO rooms (name_room, num_rows, num_columns, created_at)
         VALUES (name_room, num_rows, num_columns, CURRENT_TIMESTAMP);
@@ -19,7 +19,7 @@ BEGIN
 END $$;
 
 
-/* WORKSPACES Script  ERROR */
+/* WORKSPACES Script */
 DO $$
 DECLARE 
     room_count INTEGER;
@@ -30,14 +30,11 @@ DECLARE
 BEGIN
     SELECT COUNT(*) INTO room_count FROM rooms;
     WHILE i < 100 LOOP
-        -- Seleccionar un rooms_id aleatorio
         room_id := (SELECT rooms_id FROM rooms OFFSET floor(random() * room_count) LIMIT 1);
 
-        -- Seleccionar una fila y columna aleatoria dentro de los límites de la sala
         n_row := (SELECT floor(random() * num_rows) + 1 FROM rooms WHERE rooms_id = room_id);
         n_column := (SELECT floor(random() * num_columns) + 1 FROM rooms WHERE rooms_id = room_id);
 
-        -- Insertar el registro en workspaces
         INSERT INTO workspaces (room_id, n_row, n_column) VALUES (room_id, n_row, n_column);
         i := i + 1;
     END LOOP;
@@ -97,16 +94,12 @@ DECLARE
     session_names TEXT[] := ARRAY['Team Meeting', 'Conference Call', 'Training Session', 'Board Meeting', 'Project Review', 'Workshop', 'Webinar', 'Product Launch'];
 BEGIN
     WHILE i <= 100 LOOP
-        -- Generar start_time aleatorio entre '2024-06-19 06:00:00' y '2024-08-01 16:59:59'
         random_start := TIMESTAMP '2024-06-19 06:00:00' + (random() * (TIMESTAMP '2024-08-01 16:59:59' - TIMESTAMP '2024-06-19 06:00:00'));
 
-        -- Generar end_time aleatorio entre start_time y '2024-08-01 17:00:00'
         random_end := random_start + (random() * (TIMESTAMP '2024-08-01 17:00:00' - random_start));
 
-        -- Seleccionar un nombre de sesión aleatorio
         random_name := session_names[ceil(random() * array_length(session_names, 1))];
 
-        -- Generar max_capacity aleatorio entre 100 y 200
         random_capacity := 100 + floor(random() * 101);
 
         INSERT INTO sessions (session_name, start_time, end_time, max_capacity)
@@ -131,21 +124,17 @@ DECLARE
     statuses TEXT[] := ARRAY['Cancelled', 'In progress', 'Accepted'];
     random_status TEXT;
 BEGIN
-    -- Contar el número de registros en las tablas workspaces, sessions y users
     SELECT COUNT(*) INTO workspace_count FROM workspaces;
     SELECT COUNT(*) INTO session_count FROM sessions;
     SELECT COUNT(*) INTO user_count FROM users;
     
     WHILE i < 100 LOOP
-        -- Seleccionar IDs aleatorios de las tablas workspaces, sessions y users
         random_workspace_id := (SELECT workspace_id FROM workspaces OFFSET floor(random() * workspace_count) LIMIT 1);
         random_session_id := (SELECT session_id FROM sessions OFFSET floor(random() * session_count) LIMIT 1);
         random_user_id := (SELECT user_id FROM users OFFSET floor(random() * user_count) LIMIT 1);
         
-        -- Seleccionar un status aleatorio
         random_status := statuses[floor(random() * array_length(statuses, 1) + 1)];
         
-        -- Insertar el registro en reservations
         INSERT INTO reservations (workspace_id, session_id, user_id, status)
         VALUES (random_workspace_id, random_session_id, random_user_id, random_status);
         

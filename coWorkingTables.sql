@@ -1,9 +1,6 @@
 -- Active: 1718815659607@@bgnwijf7xgjtl39fgrro-postgresql.services.clever-cloud.com@50013
 /*TABLES - Entities*/
 
-SELECT * FROM workspaces
-
-
 /*ROOM*/
 CREATE TABLE rooms (
     rooms_id SERIAL PRIMARY KEY,
@@ -12,8 +9,6 @@ CREATE TABLE rooms (
     num_columns INTEGER NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-DROP TABLE rooms
-
 
 /*WORKSPACES*/
 CREATE TABLE workspaces (
