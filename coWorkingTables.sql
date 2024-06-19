@@ -29,8 +29,10 @@ CREATE TABLE workspaces (
 /* SESSIONS */
 CREATE TABLE sessions (
     session_id SERIAL PRIMARY KEY,
+    session_name VARCHAR(100),
     start_time TIMESTAMP NOT NULL,
     end_time TIMESTAMP NOT NULL,
+    max_capacity INTEGER NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
