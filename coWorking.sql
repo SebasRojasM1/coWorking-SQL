@@ -38,3 +38,15 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+/* RESERVATIONS */
+CREATE TABLE reservations (
+    reservation_id SERIAL PRIMARY KEY,
+    workspace_id INTEGER NOT NULL,
+    session_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL,
+    status VARCHAR(50) NOT NULL,
+    reservation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (workspace_id) REFERENCES workspaces(id),
+    FOREIGN KEY (session_id) REFERENCES sessions(id)
+);
