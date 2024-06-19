@@ -18,3 +18,12 @@ CREATE TABLE workspaces (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (room_id) REFERENCES rooms(room_id)
 );
+
+
+/* SESSIONS */
+CREATE TABLE sessions (
+    session_id SERIAL PRIMARY KEY,
+    start_time TIMESTAMP NOT NULL,
+    end_time TIMESTAMP NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
