@@ -1,3 +1,5 @@
+/* SCRIPTS */
+
 /*View the list of available workspaces for a room in a session x.*/
 SELECT * FROM workspaces LEFT JOIN reservations 
 ON workspaces.workspace_id = reservations.workspace_id 
@@ -67,4 +69,4 @@ SELECT
 FROM sessions
 JOIN reservations ON sessions.session_id = reservations.session_id
 JOIN workspaces ON reservations.workspace_id = workspaces.workspace_id
-WHERE sessions.session_id = 75;
+WHERE sessions.session_id = 14;
